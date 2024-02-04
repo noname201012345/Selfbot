@@ -2,6 +2,7 @@ const { Client } = require("discord.js-selfbot-v13");
 const { joinVoiceChannel } = require("@discordjs/voice");
 const keepAlive = require("./server.js");
 
+function ClientThread(token) {
 const client = new Client({
   checkUpdate: false,
 });
@@ -40,6 +41,14 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
     }
   }
 });
+client.login(token);
+}
+
+setTimeout(ClientThread, 0, process.env.TOKEN);
+setTimeout(ClientThread, 0, process.env.TOKENa);
+setTimeout(ClientThread, 0, process.env.TOKENt);
+setTimeout(ClientThread, 0, process.env.TOKENo);
+setTimeout(ClientThread, 0, process.env.TOKENy);
+setTimeout(ClientThread, 0, process.env.TOKENl);
 
 keepAlive();
-client.login(process.env.TOKEN);
