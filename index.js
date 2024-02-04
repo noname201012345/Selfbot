@@ -1,14 +1,33 @@
 const { Client } = require("discord.js-selfbot-v13");
 const { joinVoiceChannel } = require("@discordjs/voice");
 const keepAlive = require("./server.js");
+const { Worker, isMainThread, parentPort } = require('worker_threads');
 
-function ClientThread(token) {
+if (isMainThread) {
+  // Main thread code
+  // Create an array to store worker threads
+  const workerThreads = [];
+  // Create a number of worker threads and add them to the array
+  for (let i = 0; i < 6; i++) {
+    workerThreads.push(new Worker(__filename));
+  }
+  // Send a message to each worker thread with a task to perform
+  workerThreads.forEach((worker, index) => {
+    worker.postMessage({ task: index });
+  });
+} else {
+  // Worker thread code
+  // Listen for messages from the main thread
+  parentPort.on('message', message => {
+    console.log(`Worker ${process.pid}: Received task ${message.task}`);
+    // Perform the task
+    performTask(message.task);
+  });
+  function performTask(task) {
+    // … operations to be performed to execute the task
 const client = new Client({
   checkUpdate: false,
 });
-
-const guildID = "755793441287438469";
-const channelID = "1203620019716624444";
 
 client.on("ready", async () => {
   console.log(client.user.tag + " is ready!");
@@ -41,14 +60,20 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
     }
   }
 });
-client.login(token);
+if(task === 1) {
+  client.login(process.env.TOKEN);
+} else if(task === 2) {
+  client.login(process.env.TOKENa);
+} else if(task === 3) {
+  client.login(process.env.TOKENt);
+} else if(task === 4) {
+  client.login(process.env.TOKENo);
+} else if(task === 5) {
+  client.login(process.env.TOKENy);
+} else if(task === 6) {
+  client.login(process.env.TOKENl);
 }
-
-setTimeout(ClientThread, 0, process.env.TOKEN);
-setTimeout(ClientThread, 0, process.env.TOKENa);
-setTimeout(ClientThread, 0, process.env.TOKENt);
-setTimeout(ClientThread, 0, process.env.TOKENo);
-setTimeout(ClientThread, 0, process.env.TOKENy);
-setTimeout(ClientThread, 0, process.env.TOKENl);
+  }
+}
 
 keepAlive();
