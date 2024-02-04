@@ -3,6 +3,9 @@ const { joinVoiceChannel } = require("@discordjs/voice");
 const keepAlive = require("./server.js");
 const { Worker, isMainThread, parentPort } = require('worker_threads');
 
+const guildID = "755793441287438469";
+const channelID = "1203620019716624444";
+
 if (isMainThread) {
   // Main thread code
   // Create an array to store worker threads
