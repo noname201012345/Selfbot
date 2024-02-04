@@ -74,7 +74,7 @@ if(task === 1) {
   client.login(process.env.TOKENo);
 } else if(task === 5) {
   client.login(process.env.TOKENy);
-} else if(task === 6) {
+} else if(task === 0) {
   client.login(process.env.TOKENl);
 }
   }
