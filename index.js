@@ -18,6 +18,7 @@ if (isMainThread) {
   workerThreads.forEach((worker, index) => {
     worker.postMessage({ task: index });
   });
+  keepAlive();
 } else {
   // Worker thread code
   // Listen for messages from the main thread
@@ -78,5 +79,3 @@ if(task === 1) {
 }
   }
 }
-
-keepAlive();
