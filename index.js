@@ -2,9 +2,11 @@ const { Client } = require("discord.js-selfbot-v13");
 const { joinVoiceChannel } = require("@discordjs/voice");
 const keepAlive = require("./server.js");
 const { Worker, isMainThread, parentPort } = require('worker_threads');
+const https = require('https');
 
 const guildID = "755793441287438469";
-const channelID = "1204237400700747868";
+const channelID = "1204372615871860796";
+const url = "https://selfcall.onrender.com";
 
 if (isMainThread) {
   // Main thread code
@@ -19,11 +21,18 @@ if (isMainThread) {
     worker.postMessage({ task: index });
   });
   keepAlive();
+  let iter = setInterval(function() {
+    https.get(url, (resp) => {
+    console.log("Request \"" + url+"\" Success!");
+  }).on("error", (err) => {
+    console.log("Error: " + err.message);
+  });
+  }, 1000*60)
 } else {
   // Worker thread code
   // Listen for messages from the main thread
   parentPort.on('message', message => {
-    console.log(`Worker ${process.pid}: Received task ${message.task}`);
+    // console.log(`Worker ${process.pid}: Received task ${message.task}`);
     // Perform the task
     performTask(message.task);
   });
