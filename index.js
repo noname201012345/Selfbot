@@ -6,7 +6,7 @@ const https = require('https');
 
 const guildID = "755793441287438469";
 const channelID = "1204372615871860796";
-const url = "https://selfcall.onrender.com";
+const url = ["https://selfcall.onrender.com", "https://music-bot-4bpb.onrender.com"];
 
 if (isMainThread) {
   // Main thread code
@@ -22,11 +22,13 @@ if (isMainThread) {
   });
   keepAlive();
   let iter = setInterval(function() {
-    https.get(url, (resp) => {
+    for(let i = 0; i< url.length; i++) {
+    https.get(url[i], (resp) => {
     console.log("Request \"" + url+"\" Success!");
   }).on("error", (err) => {
     console.log("Error: " + err.message);
   });
+    }
   }, 1000*60)
 } else {
   // Worker thread code
