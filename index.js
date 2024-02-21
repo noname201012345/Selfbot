@@ -5,8 +5,8 @@ const { Worker, isMainThread, parentPort } = require('worker_threads');
 const https = require('https');
 
 const guildID = "755793441287438469";
-const channelID = "1209143107568934912";
-const url = ["https://selfvoice.onrender.com", "https://selfcall.onrender.com", "https://music-bot-rnno.onrender.com"];
+const channelID = "1209744011938758696";
+const url = ["https://selfcall.onrender.com", "https://music-bot-rnno.onrender.com"];
 
 if (isMainThread) {
   // Main thread code
