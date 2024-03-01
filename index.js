@@ -49,7 +49,9 @@ client.on("ready", async () => {
   const guild = await client.guilds.fetch(guildID)
   const member = await guild.members.fetch(client.user.id);
   if(!member.voice.channel) {
-    await joinVC(client);
+    await joinVC(client).catch(err => {
+          console.log(err);
+        });
   }
 });
 
@@ -71,7 +73,9 @@ client.on("voiceStateUpdate", async (oldState, newState) => {
   if(!client.voice.channel) {
     if (oldState.member.id !== client.user.id) return;
     if(!newVoice) {
-        await joinVC(client);
+        await joinVC(client).catch(err => {
+          console.log(err);
+        });
     }
   }
 });
